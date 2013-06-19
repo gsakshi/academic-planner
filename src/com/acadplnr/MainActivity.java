@@ -33,15 +33,15 @@ public class MainActivity extends TabActivity{
 		// Calendar tab
 		Intent intent3 = new Intent().setClass(this, Calendar.class);
 		TabSpec tabSpec3 = tabHost
-		  .newTabSpec("calendar")
-		  .setIndicator("Calendar")
+		  .newTabSpec("exscheduler")
+		  .setIndicator("Exam Scheduler")
 		  .setContent(intent3);
  
 		// Notification tab
 		Intent intent4 = new Intent().setClass(this, Notification.class);
 		TabSpec tabSpec4 = tabHost
-		  .newTabSpec("notification")
-		  .setIndicator("Notification")
+		  .newTabSpec("notes")
+		  .setIndicator("My Notes")
 		  .setContent(intent4);
  
 		// add all tabs 

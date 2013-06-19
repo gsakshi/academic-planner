@@ -146,7 +146,7 @@ public class Home extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent("com.acadplnr.EDITCOURSE");
+				Intent i = new Intent("com.acadplnr.CourseName");
 				startActivity(i);
 			}
 		});

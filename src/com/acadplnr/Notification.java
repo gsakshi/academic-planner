@@ -22,7 +22,7 @@ public class Notification extends Activity{
 			HttpStuff.setText(returned);
 		}catch(Exception e){
 			e.printStackTrace();
-			String error = e.toString();
+			String error = e.toString(); 
 			Dialog h = new Dialog(this);
 			h.setTitle(" :(");
 			TextView tv1 = new TextView(this);
