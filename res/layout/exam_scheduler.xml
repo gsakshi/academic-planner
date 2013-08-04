@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     android:background="#D6EBFF"
+    >
+     <SlidingDrawer
+		android:layout_width="wrap_content"
+		android:id="@+id/SlidingDrawer1"
+		android:handle="@+id/slideButton1"
+		android:content="@+id/contentLayout1"
+		android:padding="10dip"
+		android:orientation="vertical"
+		android:layout_alignParentBottom="true"
+		android:layout_height="200dip">
+
+	<Button
+	    android:id="@+id/slideButton1"
+	    android:layout_width="35dp"
+	    android:layout_height="35dp"
+	    android:background="@drawable/up" >
+
+	</Button>
+
+<RelativeLayout
+    android:id="@+id/contentLayout1"
+    android:layout_width="196dp"
+    android:layout_height="120dp"
+     android:background="#EBF5FF"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dip" >
+
+   <EditText
+       android:id="@+id/editText1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:layout_centerVertical="true"
+       android:ems="10"
+       android:hint="Roll Number" >
+
+       <requestFocus />
+   </EditText>
+
+   <Button
+       android:id="@+id/roll"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignBaseline="@+id/editText1"
+       android:layout_alignBottom="@+id/editText1"
+       android:layout_toRightOf="@+id/editText1"
+       android:text="OK" />
+ 
+</RelativeLayout>
+</SlidingDrawer>
+	<ScrollView
+   		 android:layout_width="fill_parent"
+         android:layout_height="wrap_content">
+     <TextView
+         android:id="@+id/examdetail"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentTop="true"
+         android:layout_centerHorizontal="true"
+         android:layout_marginTop="32dp"
+         android:text="Enter Roll no."
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+	</ScrollView>
+</RelativeLayout>

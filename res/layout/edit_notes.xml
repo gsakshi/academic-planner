@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#D6EBFF" >
+
+    <EditText
+        android:id="@+id/notesTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Title" >
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/notesBody"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:ems="10" 
+        android:hint="Body"
+        android:gravity="top"
+        android:layout_below="@id/notesTitle"
+        android:layout_above="@+id/baddNotes"
+        android:inputType="textCapSentences|textMultiLine"/>
+
+    <Button
+        android:id="@+id/baddNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Done"
+        />
+
+</RelativeLayout>

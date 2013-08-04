@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#80FF80" >
+<ScrollView
+    	android:layout_width="fill_parent"
+        android:layout_height="wrap_content"> 
+    <TextView
+        android:id="@+id/tvAboutApp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="This app takes course number and automatically fetches details of the course like instructor name, instructor email id, course schedule , venue,etc from OARS. Other course or instructor details which are not provided by OARS can be mannually entered or edited by the user.Weblink can be clicked to open the url, email id can be clicked to launch email application.
+
+It takes roll no and fetches exam schedule and syncs exam schedule with the phone's calendar.
+
+It has notes tab where different notes can be added and can serve as  android sticky notes.
+
+It creates an automatic weekly schedule for all the added courses clearly stating the lab,  lecture and tutorial."
+        android:textColor="#000000" />
+   
+</ScrollView>
+</LinearLayout>
