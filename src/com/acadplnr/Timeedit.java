@@ -15,18 +15,19 @@ import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 import android.widget.Toast;
 
-public class Timeedit extends Activity implements OnTimeChangedListener, OnClickListener{
+public class Timeedit extends Activity implements OnClickListener{
 	
 	
-	long hr, min, hr2, min2;
-	int hri, mini, hr2i, min2i, i;
-	TimePicker timepick, timepick2;
-	CheckBox cbmon, cbtue, cbwed, cbthu, cbfri, cbsat, cbsun;
+	//long hr, min, hr2, min2;
+	//int hri, mini, hr2i, min2i, i;
+	//TimePicker timepick, timepick2;
+	CheckBox cbmon, cbtue, cbwed, cbthu, cbfri;
 	EditText venue;
 	Button bdone,cancel;
-	String days,daysi, tim,timi, tim2,tim2i, v, vi,timef[], timef2[], daysf[];
+	String days,daysi, v, vi, daysf[];
 	Bundle gotbasket;
-	Time t;
+	int i;
+	//Time t;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +36,15 @@ public class Timeedit extends Activity implements OnTimeChangedListener, OnClick
 		setContentView(R.layout.timedate);
 		gotbasket = getIntent().getExtras();
 		days = gotbasket.getString("day");
-		tim = gotbasket.getString("start");
-		tim2 =  gotbasket.getString("end");
+		//tim = gotbasket.getString("start");
+		//tim2 =  gotbasket.getString("end");
 		v =  gotbasket.getString("ven");
 		
-		timef=tim.split(":");
-		timef2=tim2.split(":");
+		//timef=tim.split(":");
+		//timef2=tim2.split(":");
 		daysf=days.split(" ");
 		
-		if(timef[0].contentEquals("NotYetSet")){
+		/*if(timef[0].contentEquals("NotYetSet")){
 		t = new Time();
 		t.setToNow();
 		hr = t.hour;
@@ -70,48 +71,40 @@ public class Timeedit extends Activity implements OnTimeChangedListener, OnClick
 		timepick.setCurrentMinute(mini);
 		timepick2.setCurrentHour(hr2i);
 		timepick2.setCurrentMinute(min2i);
+		*/
 		
 		cbmon = (CheckBox) findViewById(R.id.mon);
 		cbtue = (CheckBox) findViewById(R.id.tue);
 		cbwed = (CheckBox) findViewById(R.id.wed);
 		cbthu = (CheckBox) findViewById(R.id.thu);
 		cbfri = (CheckBox) findViewById(R.id.fri);
-		cbsat = (CheckBox) findViewById(R.id.sat);
-		cbsun = (CheckBox) findViewById(R.id.sun);
 		venue = (EditText) findViewById(R.id.venue);
 		bdone = (Button) findViewById(R.id.done);
 		cancel = (Button) findViewById(R.id.cancel);
-		timepick.setOnTimeChangedListener(this);
-		timepick2.setOnTimeChangedListener(this);
+		//timepick.setOnTimeChangedListener(this);
+		//timepick2.setOnTimeChangedListener(this);
 		bdone.setOnClickListener(this);
 		cancel.setOnClickListener(this);
 
-		for(i=0;i<daysf.length;i++)
-		{
-			if(daysf[i].contentEquals("M")){
+		//for(i=0;i<daysf.length;i++)
+		//{
+			if(days.contains("M")){
 				cbmon.setChecked(true);
 			}
-			if(daysf[i].contentEquals("T")){
+			if(days.contains("T ")){
 				cbtue.setChecked(true);
 			}
-			if(daysf[i].contentEquals("W")){
+			if(days.contains("W")){
 				cbwed.setChecked(true);
 			}
-			if(daysf[i].contentEquals("t")){
+			if(days.contains("Th")){
 				cbthu.setChecked(true);
 			}
-			if(daysf[i].contentEquals("F")){
+			if(days.contains("F")){
 				cbfri.setChecked(true);
 			}
-			if(daysf[i].contentEquals("s")){
-				cbsat.setChecked(true);
-			}
-			if(daysf[i].contentEquals("s")){
-				cbsun.setChecked(true);
-			}
-			
-			
-		}
+						
+		//}
 		venue.setText(v);
 		
 	}
@@ -123,8 +116,8 @@ public class Timeedit extends Activity implements OnTimeChangedListener, OnClick
 		switch (arg0.getId()) {
 		case R.id.done:
 			daysi="";
-			timi="";
-			tim2i="";
+			//timi="";
+			//tim2i="";
 			if (cbmon.isChecked())
 				daysi = daysi + "M ";
 			if (cbtue.isChecked())
@@ -132,24 +125,20 @@ public class Timeedit extends Activity implements OnTimeChangedListener, OnClick
 			if (cbwed.isChecked())
 				daysi = daysi + "W ";
 			if (cbthu.isChecked())
-				daysi = daysi + "t ";
+				daysi = daysi + "Th ";
 			if (cbfri.isChecked())
 				daysi = daysi + "F ";
-			if (cbsat.isChecked())
-				daysi = daysi + "S ";
-			if (cbsun.isChecked())
-				daysi = daysi + "s ";
-			if (hr2 < hr || ((hr == hr2) && (min2 < min))) {
+			/*if (hr2 < hr || ((hr == hr2) && (min2 < min))) {
 				Toast t = Toast.makeText(Timeedit.this,"ending time should be greater than beginning time, enter time again",
 								Toast.LENGTH_LONG);
 				t.show();
 				break;
-			}
-			timi = timi + hr + ":" + min;
-			tim2i = tim2i + hr2 + ":" + min2;
+			}*/
+			//timi = timi + hr + ":" + min;
+			//tim2i = tim2i + hr2 + ":" + min2;
 			Bundle basket = new Bundle();
-			basket.putString("start_time", timi);
-			basket.putString("end_time", tim2i);
+			//basket.putString("start_time", timi);
+			//basket.putString("end_time", tim2i);
 			basket.putString("day", daysi);
 			basket.putString("ven", venue.getText().toString());
 			Intent i = new Intent("");
@@ -178,7 +167,7 @@ public class Timeedit extends Activity implements OnTimeChangedListener, OnClick
 	}
 	
 
-	@Override
+	/*@Override
 	public void onTimeChanged(TimePicker arg0, int arg1, int arg2) {
 		// TODO Auto-generated method stub
 		switch (arg0.getId()) {
@@ -197,7 +186,7 @@ public class Timeedit extends Activity implements OnTimeChangedListener, OnClick
 			min2 = timepick2.getCurrentMinute();
 			
 		}
-	}
+	}*/
 
 
 	
@@ -205,4 +194,3 @@ public class Timeedit extends Activity implements OnTimeChangedListener, OnClick
 	
 
 }
-

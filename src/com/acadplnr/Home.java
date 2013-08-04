@@ -13,6 +13,10 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -38,6 +42,13 @@ public class Home extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
+		
+		final Animation animation = new AlphaAnimation(1, 0); 
+		animation.setDuration(500);
+		animation.setInterpolator(new LinearInterpolator());
+		 animation.setRepeatCount(Animation.INFINITE);
+		 animation.setRepeatMode(Animation.REVERSE);
+		 
 		// Initialize the UI components
        courseListView = (ListView) findViewById(R.id.listView);
         
@@ -68,7 +79,7 @@ public class Home extends Activity{
 			{
 				alldata = dinfo.GetAllCourses(); 
 
-				data = alldata.split("-");
+				data = alldata.split("---");
 			//splits data into an array of strings containing course_names
 				for(int j=0;j<data.length;j++)
 				{
@@ -141,11 +152,18 @@ public class Home extends Activity{
         courseListView.setAdapter(arrayAdapter);
         registerForContextMenu(courseListView);
         addCourse = (Button) findViewById(R.id.addCourse);
+        addCourse.startAnimation(animation);
         addCourse.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
+				v.clearAnimation();
+				
+				addCourse.startAnimation(AnimationUtils.loadAnimation(Home.this, R.anim.translate));
+				
+				
 				Intent i = new Intent("com.acadplnr.CourseName");
 				startActivity(i);
 			}
@@ -208,15 +226,7 @@ public class Home extends Activity{
         {return false;} 
         return true; 
         }
-	@Override
-	protected void onRestart() {
-		// TODO Auto-generated method stub
-		super.onRestart();
-		if (globe.done == 1)
-		{
-			finish();
-		}
-	}
+	
 
 		
 }

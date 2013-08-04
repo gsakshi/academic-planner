@@ -9,13 +9,17 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Update extends Activity implements OnClickListener {
 
-	Button bdone, blec, btut, blab;
-	EditText c_name, ins_name, wlink, off;
-	String ClickedPosition, lecd, lecst, lecet, lecv, tutd, tutst, tutet, tutv,
-			labd, labst, labet, labv,hdata,welink;
+	Button bdone, blab;
+	String ClickedPosition, lecv, tutv, labd, labv, hdata, welink, profid,
+			credits, profname1="",profname2="", profnames[]={},office, insname, prof="";
+	Global1 globe;
+	EditText courseLnk, instructname, off_hr_add, courseCredits, lectVenue,
+			tutVenue, profemail;
+	Button bLab;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +27,18 @@ public class Update extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.editadd);
 
+		profemail = (EditText) findViewById(R.id.instructorEmailid);
+		courseCredits = (EditText) findViewById(R.id.courseCredits);
+		lectVenue = (EditText) findViewById(R.id.lecturevenue);
+		tutVenue = (EditText) findViewById(R.id.tutorialvenue);
+		courseLnk = (EditText) findViewById(R.id.courselink);
+		instructname = (EditText) findViewById(R.id.instructorname);
+		off_hr_add = (EditText) findViewById(R.id.officehour_and_address);
 		bdone = (Button) findViewById(R.id.bdoneeditadd);
-		blec = (Button) findViewById(R.id.lectureschedule);
-		btut = (Button) findViewById(R.id.tutorialschedule);
-		blab = (Button) findViewById(R.id.labschedule);
-		c_name = (EditText) findViewById(R.id.coursename);
-		ins_name = (EditText) findViewById(R.id.instructorname);
-		wlink = (EditText) findViewById(R.id.courselink);
-		off = (EditText) findViewById(R.id.officehour_and_address);
-
+		bLab = (Button) findViewById(R.id.labschedule);
+		bLab.setOnClickListener(this);
 		bdone.setOnClickListener(this);
-		blec.setOnClickListener(this);
-		btut.setOnClickListener(this);
-		blab.setOnClickListener(this);
+
 		Bundle gotBasket = getIntent().getExtras();
 		ClickedPosition = gotBasket.getString("clkpos");
 
@@ -49,87 +52,28 @@ public class Update extends Activity implements OnClickListener {
 		if (c != null) {
 
 			String[] data;
-			String delimiter = "-";
+			String delimiter = "---";
 			data = c.split(delimiter);
+			prof=data[1];
+			profnames = prof.split(",");
+	    	for (int i = 0; i < profnames.length; i++) {
+	    			if (i == 0)
+	    				profname1 = profnames[i];
 
-			c_name.setText(data[0]);
+	    			else if (i == 1)
+	    				profname2 = profnames[i];
+	    	}
+			instructname.setText(profname1 +"\n" + profname2);
+			profemail.setText(data[2]);
+			courseLnk.setText(data[3]);
+			off_hr_add.setText(data[4]);
+			courseCredits.setText(data[10]);
+			lectVenue.setText(data[6]);
+			tutVenue.setText(data[8]);
+			labd = data[5];
+			labv = data[7];
 
-			if (data[1].contentEquals("null"))
-				wlink.setText("NotYetSet");
-			else
-				wlink.setText(data[1]);
-
-			if (data[2].contentEquals("null"))
-				ins_name.setText("NotYetSet");
-			else
-				ins_name.setText(data[2]);
-			
-			if (data[3].contentEquals("null"))
-				off.setText("NotYetSet");
-			else
-				off.setText(data[3]);
-			
-			if (data[4].contentEquals("null"))
-				lecd = "NotYetSet";
-			else
-				lecd = data[4];
-			
-			if (data[5].contentEquals("null"))
-				lecst = "NotYetSet";
-			else
-				lecst = data[5];
-			
-			if (data[6].contentEquals("null"))
-				lecet = "NotYetSet";
-			else
-				lecet = data[6];
-			
-			if (data[7].contentEquals("null"))
-				labd = "NotYetSet";
-			else
-				labd = data[7];
-			
-			if (data[8].contentEquals("null"))
-				labst = "NotYetSet";
-			else
-				labst = data[8];
-			
-			if (data[9].contentEquals("null"))
-				labet = "NotYetSet";
-			else
-				labet = data[9];
-			
-			if (data[10].contentEquals("null"))
-				tutd = "NotYetSet";
-			else
-				tutd = data[10];
-			
-			if (data[11].contentEquals("null"))
-				tutst = "NotYetSet";
-			else
-				tutst = data[11];
-			
-			if (data[12].contentEquals("null"))
-				tutet = "NotYetSet";
-			else
-				tutet = data[12];
-			
-			if (data[13].contentEquals("null"))
-				lecv = "NotYetSet";
-			else
-				lecv = data[13];
-			
-			if (data[14].contentEquals("null"))
-				labv = "NotYetSet";
-			else
-				labv = data[14];
-			
-			if (data[15].contentEquals("null"))
-				tutv = "NotYetSet";
-			else
-				tutv = data[15];
-
-		} 
+		}
 		info.close();
 
 	}
@@ -141,43 +85,36 @@ public class Update extends Activity implements OnClickListener {
 		switch (v.getId()) {
 
 		case R.id.bdoneeditadd:
-			welink = wlink.getText().toString();
-			if (!welink.startsWith("http://")&&!welink.startsWith("https://")) {
-			    welink = "http://" + welink;
-			}
-			GetMethodEx test = new GetMethodEx(welink);
-			try{
-				hdata = test.getInternetData();
-			}catch(Exception e){
-				e.printStackTrace();
-				String error = e.toString();
-				Dialog h = new Dialog(this);
-				h.setTitle(" :(");
-				TextView tv1 = new TextView(this);
-				tv1.setText(error);
-				h.setContentView(tv1);
-				h.show();
-				hdata = "Could not retrieve data from internet";
-			}
+
+			/*
+			 * GetMethodEx test = new GetMethodEx(welink); try{ hdata =
+			 * test.getInternetData(); }catch(Exception e){ e.printStackTrace();
+			 * String error = e.toString(); Dialog h = new Dialog(this);
+			 * h.setTitle(" :("); TextView tv1 = new TextView(this);
+			 * tv1.setText(error); h.setContentView(tv1); h.show(); hdata =
+			 * "Could not retrieve data from internet"; }
+			 */
 			boolean didItWORK = true;
-				
+
 			try {
-				String cname = c_name.getText().toString();
-				String insname = ins_name.getText().toString();
-				 welink = wlink.getText().toString();
-				String office = off.getText().toString();
+				welink = courseLnk.getText().toString();
+				insname = instructname.getText().toString();
+				office = off_hr_add.getText().toString();
+				profid = profemail.getText().toString();
+				credits = courseCredits.getText().toString();
+				lecv = lectVenue.getText().toString();
+				tutv = tutVenue.getText().toString();
 				Crs_database_help entry = new Crs_database_help(Update.this);
 				entry.open();
 				long l = Long.parseLong(ClickedPosition);
-				entry.UpdateCourse(l, cname, insname, welink, office, lecd,
-						lecst, lecet, tutd, tutst, tutet, labd, labst, labet,
-						lecv, labv, tutv,hdata);
+				entry.UpdateCourse(l, insname, welink, office, labd, lecv,
+						labv, tutv, profid, credits);
 				entry.close();
 			} catch (Exception e) {
 				didItWORK = false;
 				String error = e.toString();
 				Dialog h = new Dialog(this);
-				h.setTitle(" :(");
+				h.setTitle(" Course Edit Unsuccessful");
 				TextView tv1 = new TextView(this);
 				tv1.setText(error);
 				h.setContentView(tv1);
@@ -185,59 +122,45 @@ public class Update extends Activity implements OnClickListener {
 			} finally {
 				if (didItWORK) {
 					Dialog d = new Dialog(this);
-					d.setTitle("YEAH !");
+					d.setTitle("Course Edited Successfully!");
 					TextView tv = new TextView(this);
 					tv.setText("Success!");
 					d.setContentView(tv);
 					d.show();
-					finish();
 					Intent i = new Intent(Update.this, MainActivity.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
+					
 				}
 			}
 			break;
 
 		case R.id.labschedule:
-			Bundle lab = new Bundle();
-			lab.putString("start", labst);
-			lab.putString("end", labet);
-			lab.putString("ven", labv);
-			lab.putString("day", labd);
-			try{
-			Intent i1 = new Intent("com.acadplnr.Timeedit");
-			i1.putExtras(lab);
-			startActivityForResult(i1, 1);
-			} catch (Exception e) {
-				String error = e.toString();
-				Dialog h = new Dialog(this);
-				h.setTitle(" :(");
-				TextView tv1 = new TextView(this);
-				tv1.setText(error);
-				h.setContentView(tv1);
-				h.show();
+			if (labd.contentEquals("")) {
+				Toast t =Toast.makeText(Update.this, "No lab for this course",
+						Toast.LENGTH_LONG);
+				t.show();
+				
+			} else {
+				Bundle lab = new Bundle();
+				lab.putString("ven", labv);
+				lab.putString("day", labd);
+				try {
+					Intent i1 = new Intent("com.acadplnr.Timeedit");
+					i1.putExtras(lab);
+					startActivityForResult(i1, 1);
+				} catch (Exception e) {
+					String error = e.toString();
+					Dialog h = new Dialog(this);
+					h.setTitle(" ERROR ");
+					TextView tv1 = new TextView(this);
+					tv1.setText(error);
+					h.setContentView(tv1);
+					h.show();
+				}
+				
 			}
 			break;
-		case R.id.lectureschedule:
-			Bundle lecture = new Bundle();
-			lecture.putString("start", lecst);
-			lecture.putString("end", lecet);
-			lecture.putString("ven", lecv);
-			lecture.putString("day", lecd);
-			Intent i2 = new Intent("com.acadplnr.Timeedit");
-			i2.putExtras(lecture);
-			startActivityForResult(i2, 2);
-			break;
-		case R.id.tutorialschedule:
-			Bundle tutorial = new Bundle();
-			tutorial.putString("start", tutst);
-			tutorial.putString("end", tutet);
-			tutorial.putString("ven", tutv);
-			tutorial.putString("day", tutd);
-			Intent i3 = new Intent("com.acadplnr.Timeedit");
-			i3.putExtras(tutorial);
-			startActivityForResult(i3, 3);
-			break;
-
 		}
 
 	}
@@ -246,27 +169,12 @@ public class Update extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		
+
 		if (resultCode == RESULT_OK) {
 			Bundle received_basket = data.getExtras();
 			if (requestCode == 1) {
-				labst = "" + received_basket.getString("start_time");
-				labet = "" + received_basket.getString("end_time");
-				labv= "" + received_basket.getString("ven");
+				labv = "" + received_basket.getString("ven");
 				labd = "" + received_basket.getString("day");
-
-			}
-			if (requestCode == 2) {
-				lecst = "" + received_basket.getString("start_time");
-				lecet = "" + received_basket.getString("end_time");
-				lecv= "" + received_basket.getString("ven");
-				lecd = "" + received_basket.getString("day");
-			}
-			if (requestCode == 3) {
-				tutst = "" + received_basket.getString("start_time");
-				tutet = "" + received_basket.getString("end_time");
-				tutv= "" + received_basket.getString("ven");
-				tutd = "" + received_basket.getString("day");
 			}
 		}
 

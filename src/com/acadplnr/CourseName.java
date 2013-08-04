@@ -8,13 +8,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import com.acadplnr.R;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
@@ -24,6 +29,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.os.Bundle;
@@ -31,8 +37,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 public class CourseName extends Activity implements OnClickListener {
-	
-	private String COURSE;
+	Document doc;
+	Global1 globe;
+	private String COURSE,course;
 	private static final String[] COURSES = new String[] {
 		
 		"AE201","AE201A","AE232","AE311","AE311A","AE321","AE321A","AE331","AE331A",
@@ -138,10 +145,11 @@ public class CourseName extends Activity implements OnClickListener {
 	};
 	Button b;
 	TextView sethtml;
+	int j=0;
 	String html, coursetitle = "", prof = "", schedule = "", profname[] = {},
 			profname1 = "", profname2 = "", profemail = "", lecv = "",
-			tutv = "", labv = "", lecdays = "", tutdays = "", labdays = "",
-			lecmonst = "", lecmonet = "", lectuest = "", lectueet = "",
+			tutv = "", labv = "", lecdays = "", tutdays = "", labdays = "",weblink="",
+			lecmonst = "", lecmonet = "", lectuest = "", lectueet = "",offhradd="",
 			lecwedst = "", lecwedet = "", lecthust = "", lecthuet = "",
 			lecfrist = "", lecfriet = "", lecsatst = "", lecsatet = "",
 			lecsunst = "", lecsunet = "", tutmonst = "", tutmonet = "",
@@ -151,8 +159,9 @@ public class CourseName extends Activity implements OnClickListener {
 			labmonst = "", labmonet = "", labtuest = "", labtueet = "",
 			labwedst = "", labwedet = "", labthust = "", labthuet = "",
 			labfrist = "", labfriet = "", labsatst = "", labsatet = "",
-			labsunst = "", labsunet = "";
+			labsunst = "", labsunet = "", credits="";
 		AutoCompleteTextView textView;
+		EditText wlink,offhr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -161,8 +170,10 @@ public class CourseName extends Activity implements OnClickListener {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, COURSES);
 		textView.setAdapter(adapter);
 		b = (Button) findViewById(R.id.button1);
-		sethtml = (TextView)findViewById(R.id.TV1);
+		
 		b.setOnClickListener(this);
+		wlink =(EditText)findViewById(R.id.etweblink);
+		offhr =(EditText)findViewById(R.id.etoffhours);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -176,83 +187,87 @@ public class CourseName extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch(arg0.getId()){
 		case R.id.button1:
-			COURSE = textView.getText().toString();
-			/*HttpClient client = new DefaultHttpClient();
-			HttpGet request = new HttpGet("http://172.26.142.66:6060/Utils/CourseInfoPopup2.asp?Course="+COURSE);
-			HttpResponse response = null;
-			try {
-				response = client.execute(request);
-			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			InputStream in = null;
-			try {
-				in = response.getEntity().getContent();
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			StringBuilder str = new StringBuilder();
-			String line = "";
-			try {
-				while((line = reader.readLine()) != null)
-				{
-				    str.append(line);
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
-				in.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			html = str.toString();
-			*/
-			parsehtml(html);
+			
+			b.startAnimation(AnimationUtils.loadAnimation(CourseName.this, R.anim.anim_rotate));
+			
+			course = textView.getText().toString();
+			COURSE = course.toUpperCase();
+			offhradd = offhr.getText().toString();
+			weblink= wlink.getText().toString();
+			parsehtml();
 		}
 		
 	}
 	
-	public void parsehtml(String html) {
+	public void parsehtml() {
 
-		Document doc = null;
+		
 		try {
-			doc = Jsoup.connect("http://172.26.142.66:6060/Utils/CourseInfoPopup2.asp?Course="+COURSE).get();
-		} catch (IOException e) {
+			
+			 class fetch1 extends AsyncTask<Void, Void, Void>
+			    {
+
+			        ProgressDialog mProgressDialog;
+			        @Override
+			        protected void onPostExecute(Void result) {
+			            mProgressDialog.dismiss();
+			            Elements tableRows = doc.select("tr");
+
+			    		coursetitle = COURSE + " ("+tableRows.get(1).select("td").get(1).text()+")";
+			    		prof = tableRows.get(2).select("td").get(1).text();
+			    		
+			    		profname = prof.split(", ");
+			    	/*	for (int i = 0; i < profname.length; i++) {
+			    			if (i == 0)
+			    				profname1 = profname[i];
+
+			    			else if (i == 1)
+			    				profname2 = profname[i];
+			    		}*/
+			    		//sethtml.setText(profname1+" * "+profname2);
+			    		profemail = tableRows.get(4).select("td").get(1).text();
+			    		
+			    		schedule = tableRows.get(7).select("td").get(1).text();
+			    		credits = tableRows.get(5).select("td").get(1).text().split("-")[4];
+			    		
+			    		breakschedule();
+			    		
+			    		AddCourseToDatabase();
+			       
+			        }
+
+			        @Override
+			        protected void onPreExecute() {
+			            mProgressDialog = ProgressDialog.show(CourseName.this, 
+			                                            "Loading...", "Data is Loading...");
+			        }
+
+			        @Override
+			        protected Void doInBackground(Void... params) {
+			           // your network operation
+			        	try{
+			        		final Document	doc1 = Jsoup.connect("http://172.26.142.66:4040/Utils/CourseInfoPopup2.asp?Course="+COURSE).get();
+			        		doc = doc1;
+			        	}catch(IOException e)
+			        	{
+			        		e.printStackTrace();
+			        	}
+			        	return null;
+			        }
+			    }
+			new fetch1().execute();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			String error = e.toString();
+			Dialog h = new Dialog(this);
+			h.setTitle(" :(");
+			TextView tv1 = new TextView(this);
+			tv1.setText(error);
+			h.setContentView(tv1);
+			h.show();
 		}
-		//Document doc = Jsoup.parse(html);
 
-		Elements tableRows = doc.select("tr");
-
-		coursetitle = tableRows.get(1).select("td").get(1).text();
-		prof = tableRows.get(2).select("td").get(1).text();
-		
-		profname = prof.split(", ");
-		for (int i = 0; i < profname.length; i++) {
-			if (i == 0)
-				profname1 = profname[i];
-
-			else if (i == 1)
-				profname2 = profname[i];
-		}
-		sethtml.setText(profname1+" * "+profname2);
-		profemail = tableRows.get(4).select("td").get(1).text();
-		schedule = tableRows.get(7).select("td").get(1).text();
-		breakschedule();
 	}
 
 	public void breakschedule() {
@@ -261,38 +276,39 @@ public class CourseName extends Activity implements OnClickListener {
 		lecindex = schedule.indexOf("LEC");
 		tutindex = schedule.indexOf("TUT");
 		labindex = schedule.indexOf("LAB");
-		int flag = 0,j=0;
+		
+		j=0;
 		if (lecindex != -1) {
 
 			String lecd = "", lect = "", lecvenue = "";
-			
-			if(flag==0){
-				 j = lecindex + 5;
-				 flag=1;
-			}
-			
-			while (((tutindex!=-1 && j < tutindex) || tutindex==-1) && ((labindex!=-1 && j < labindex) || labindex==-1) && j<schedule.length() ) {
+			j = lecindex + 5;
+			skip_white_spaces(schedule);
+			while (((tutindex!=-1 && j < tutindex) || tutindex==-1) && ((labindex!=-1 && j < labindex) || labindex==-1) && j<schedule.length() && schedule.charAt(j)!='n') {
+				
 				lecd = ""; lect = ""; lecvenue = "";
 				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
 					lecd = lecd + schedule.charAt(j);
 					j++;
 				}
 				j++;
-				if (schedule.charAt(j) >= '0' && schedule.charAt(j) <= '9') {
-					while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
+				
+				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
 						lect = lect + schedule.charAt(j);
 						j++;
-					}
 				}
+				
 				j++;
-				while (schedule.charAt(j) != ';' && j<schedule.length() ) {
+				
+				while (schedule.charAt(j)!=';' && j<schedule.length() ) {
 					lecvenue = lecvenue + schedule.charAt(j);
 					j++;
 				}
 				j++;
+				if(j<schedule.length())
+				skip_white_spaces(schedule);
 				if (lecvenue.contentEquals("REQ")) {
-					if (lecv.contentEquals("null"))
-						lecv = "Not Yet Set";
+					if (lecv.contentEquals(""))
+						lecv = "N.A.";
 				} else
 					lecv = lecvenue;
 				
@@ -301,64 +317,60 @@ public class CourseName extends Activity implements OnClickListener {
 					lecmonst = lect.split("-")[0];
 					lecmonet = lect.split("-")[1];
 				}
+				if (lecd.contains("T") && (((lecd.indexOf("T") + 1)<lecd.length() && lecd.charAt(lecd.indexOf("T") + 1) != 'h') || (lecd.indexOf("T") + 1)==lecd.length())){
+					lecdays = lecdays + "T ";
+					lectuest = lect.split("-")[0];
+					lectueet = lect.split("-")[1];
+				}
 				if (lecd.contains("W")) {
 					lecdays = lecdays + "W ";
 					lecwedst = lect.split("-")[0];
 					lecwedet = lect.split("-")[1];
 				}
-				if (lecd.contains("F")) {
-					lecdays = lecdays + "F ";
-					lecfrist = lect.split("-")[0];
-					lecfriet = lect.split("-")[1];
-				}
-				if (lecd.contains("S")) {
-					lecdays = lecdays + "S ";
-					lecsatst = lect.split("-")[0];
-					lecsatet = lect.split("-")[1];
-				}
 				if (lecd.contains("Th")) {
 					lecdays = lecdays + "Th ";
 					lecthust = lect.split("-")[0];
 					lecthuet = lect.split("-")[1];
+				}if (lecd.contains("F")) {
+					lecdays = lecdays + "F ";
+					lecfrist = lect.split("-")[0];
+					lecfriet = lect.split("-")[1];
 				}
-				if (lecd.contains("T")
-						&& lecd.charAt(lecd.indexOf("T") + 1) != 'h') {
-					lecdays = lecdays + "T ";
-					lectuest = lect.split("-")[0];
-					lectueet = lect.split("-")[1];
-				}
+				
+				
 			}
 		}
-		flag=0; j=0;
+		j=0;
 		if (tutindex != -1) {
 
 			String tutd = "", tutt = "", tutvenue = "";
-			if(flag==0){
-				j = tutindex + 5;
-				flag=1;
-			}
-			while ((labindex!=-1 && j < labindex) || labindex==-1 && j<schedule.length() ) {
+			j = tutindex + 5;
+			skip_white_spaces(schedule);
+			while (((labindex!=-1 && j < labindex) || labindex==-1) && j<schedule.length() && schedule.charAt(j)!='n' ) {
 				tutd = ""; tutt = ""; tutvenue = "";
 				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
 					tutd = tutd + schedule.charAt(j);
 					j++;
 				}
 				j++;
-				if (schedule.charAt(j) >= '0' && schedule.charAt(j) <= '9') {
-					while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
+				
+				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
 						tutt = tutt + schedule.charAt(j);
 						j++;
-					}
 				}
 				j++;
+				
 				while (schedule.charAt(j) != ';' && j<schedule.length() ) {
 					tutvenue = tutvenue + schedule.charAt(j);
 					j++;
 				}
 				j++;
+				
+				if(j<schedule.length())
+				skip_white_spaces(schedule);
 				if (tutvenue.contentEquals("REQ")) {
-					if (tutv.contentEquals("null"))
-						tutv = "Not Yet Set";
+					if (tutv.contentEquals(""))
+						tutv = "N.A.";
 				} else
 					tutv = tutvenue;
 				
@@ -367,64 +379,60 @@ public class CourseName extends Activity implements OnClickListener {
 					tutmonst = tutt.split("-")[0];
 					tutmonet = tutt.split("-")[1];
 				}
+				if(tutd.contains("T") && (((tutd.indexOf("T") + 1)<tutd.length() && tutd.charAt(tutd.indexOf("T") + 1) != 'h') || (tutd.indexOf("T") + 1)==tutd.length())) {
+					tutdays = tutdays + "T ";
+					tuttuest = tutt.split("-")[0];
+					tuttueet = tutt.split("-")[1];
+				}
 				if (tutd.contains("W")) {
 					tutdays = tutdays + "W ";
 					tutwedst = tutt.split("-")[0];
 					tutwedet = tutt.split("-")[1];
-				}
-				if (tutd.contains("F")) {
-					tutdays = tutdays + "F ";
-					tutfrist = tutt.split("-")[0];
-					tutfriet = tutt.split("-")[1];
-				}
-				if (tutd.contains("S")) {
-					tutdays = tutdays + "S ";
-					tutsatst = tutt.split("-")[0];
-					tutsatet = tutt.split("-")[1];
 				}
 				if (tutd.contains("Th")) {
 					tutdays = tutdays + "Th ";
 					tutthust = tutt.split("-")[0];
 					tutthuet = tutt.split("-")[1];
 				}
-				/*if (tutd.contains("T")
-						&& tutd.charAt(tutd.indexOf("T") + 1) != 'h' ) {
-					tutdays = tutdays + "T ";
-					tuttuest = tutt.split("-")[0];
-					tuttueet = tutt.split("-")[1];
-				}*/
+				if (tutd.contains("F")) {
+					tutdays = tutdays + "F ";
+					tutfrist = tutt.split("-")[0];
+					tutfriet = tutt.split("-")[1];
+				}
+				
 			}
 		}
-		flag =0;j=0;
+		j=0;
 		if (labindex != -1) {
 
 			String labd = "", labt = "", labvenue = "";
-			if(flag==0){
-				j = labindex + 5;
-				flag=1;
-			}
-			while (j<schedule.length() ) {
+			j = labindex + 5;
+			skip_white_spaces(schedule);
+			while (j<schedule.length() && schedule.charAt(j)!='n') {
 				labd = ""; labt = ""; labvenue = "";
 				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
 					labd = labd + schedule.charAt(j);
 					j++;
 				}
 				j++;
-				if (schedule.charAt(j) >= '0' && schedule.charAt(j) <= '9') {
-					while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
+				
+				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
 						labt = labt + schedule.charAt(j);
 						j++;
-					}
 				}
+				
 				j++;
 				while (schedule.charAt(j) != ';' && j<schedule.length() ) {
 					labvenue = labvenue + schedule.charAt(j);
 					j++;
 				}
 				j++;
+				
+				if(j<schedule.length())
+				skip_white_spaces(schedule);
 				if (labvenue.contentEquals("REQ")) {
-					if (labv.contentEquals("null"))
-						labv = "Not Yet Set";
+					if (labv.contentEquals(""))
+						labv = "N.A.";
 				} else
 					labv = labvenue;
 				
@@ -433,34 +441,57 @@ public class CourseName extends Activity implements OnClickListener {
 					labmonst = labt.split("-")[0];
 					labmonet = labt.split("-")[1];
 				}
+				if (labd.contains("T") && (((labd.indexOf("T") + 1)<labd.length() && labd.charAt(labd.indexOf("T") + 1) != 'h') || (labd.indexOf("T") + 1)==labd.length())) {
+					labdays = labdays + "T ";
+					labtuest = labt.split("-")[0];
+					labtueet = labt.split("-")[1];
+				}
 				if (labd.contains("W")) {
 					labdays = labdays + "W ";
 					labwedst = labt.split("-")[0];
 					labwedet = labt.split("-")[1];
-				}
-				if (labd.contains("F")) {
-					labdays = labdays + "F ";
-					labfrist = labt.split("-")[0];
-					labfriet = labt.split("-")[1];
-				}
-				if (labd.contains("S")) {
-					labdays = labdays + "S ";
-					labsatst = labt.split("-")[0];
-					labsatet = labt.split("-")[1];
 				}
 				if (labd.contains("Th")) {
 					labdays = labdays + "Th ";
 					labthust = labt.split("-")[0];
 					labthuet = labt.split("-")[1];
 				}
-				if (labd.contains("T")
-						&& labd.charAt(labd.indexOf("T") + 1) != 'h') {
-					labdays = labdays + "T ";
-					labtuest = labt.split("-")[0];
-					labtueet = labt.split("-")[1];
+				if (labd.contains("F")) {
+					labdays = labdays + "F ";
+					labfrist = labt.split("-")[0];
+					labfriet = labt.split("-")[1];
 				}
+				
 			}
-		
 		}
+	}
+	
+	public void skip_white_spaces(String schedule){
+		
+		while(schedule.charAt(j)==' ' && j<(schedule.length())){
+			j++;
+		}
+	}
+	public void AddCourseToDatabase(){
+		Crs_database_help info = new Crs_database_help(CourseName.this);
+		info.open();
+		try {
+			info.createEntry(coursetitle, prof, weblink, offhradd, lecv, labv, tutv, labdays, profemail, schedule, credits);
+			info.KeyRowIdUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			String error = e.toString();
+			Dialog h = new Dialog(this);
+			h.setTitle(" :(_database create");
+			TextView tv1 = new TextView(this);
+			tv1.setText(error);
+			h.setContentView(tv1);
+			h.show();
+		}
+		info.close();
+		Intent i = new Intent(CourseName.this, MainActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(i);
 	}
 }

@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity"
+    android:background="#D6EBFF" >
 
     <AutoCompleteTextView
         android:id="@+id/actv"
@@ -14,8 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000000"
         android:ems="10"
-        android:hint="Course Name" />
+        android:hint="Course Number" />
 
     <Button
         android:id="@+id/button1"
@@ -23,15 +26,30 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="DONE" />
+        android:text="DONE"
+        />
 
-    <TextView
-        android:id="@+id/TV1"
-        android:layout_width="wrap_content"
+    
+
+    <EditText
+        android:id="@+id/etweblink"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
         android:layout_below="@+id/actv"
-        android:layout_marginTop="156dp"
-        android:text="abcdef" />
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Course Weblink" >
+
+        
+    </EditText>
+
+    <EditText
+        android:id="@+id/etoffhours"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etweblink"
+        android:layout_centerHorizontal="true"
+        android:ems="10" 
+        android:hint="Instructor and Office hours details"/>
 
 </RelativeLayout>

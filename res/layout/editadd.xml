@@ -2,67 +2,133 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D6EBFF"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp">
+     
 
-    <EditText
-        android:id="@+id/coursename"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter course name"
-        android:paddingBottom="10dp"
-        android:textSize="20dp" >
+        android:layout_height="wrap_content" >
 
-        <requestFocus />
-    </EditText>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/courselink"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter course weblink"
-        android:paddingBottom="10dp"
-        android:textSize="20dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Instructor Name :"
+                android:textSize="15dp" />
 
-    <EditText
-        android:id="@+id/instructorname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter instructor name"
-        android:paddingBottom="10dp"
-        android:textSize="20dp" />
-    <EditText
-        android:id="@+id/officehour_and_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter Instructor and office hours details"
-        android:paddingBottom="10dp"
-        android:textSize="20dp" />
+            <EditText
+                android:id="@+id/instructorname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter instructor name"
+                android:paddingBottom="10dp"
+                android:textSize="20dp" />
 
-    <Button
-        android:id="@+id/lectureschedule"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Lecture Schedule" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Course Weblink :"
+                android:textSize="15dp" />
 
-    <Button
-        android:id="@+id/tutorialschedule"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Tutorial Schedule" />
+            <EditText
+                android:id="@+id/courselink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter course weblink"
+                android:paddingBottom="10dp"
+                android:textSize="20dp" />
 
-    <Button
-        android:id="@+id/labschedule"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Lab Schedule" />
-    <Button
-        android:id="@+id/bdoneeditadd"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Done" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Instructor Email id:"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/instructorEmailid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter Instructor Email id" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Course Credits :"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/courseCredits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter course credits"
+                android:paddingBottom="10dp"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Instructor office hours details :"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/officehour_and_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter Instructor and office hours details"
+                android:paddingBottom="10dp"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lecture venue :"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/lecturevenue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter Lecture venue" >
+            </EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tutorial Venue :"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/tutorialvenue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter Tutorial Venue" />
+
+            <Button
+                android:id="@+id/labschedule"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Lab Schedule" />
+
+            <Button
+                android:id="@+id/bdoneeditadd"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Done" 
+                />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

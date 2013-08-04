@@ -2,32 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="#D6EBFF" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="100" >
+        android:weightSum="100"
+        android:background="#66C2FF" >
 
         <TextView
             android:id="@+id/coursename"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:layout_weight="17"
             android:gravity="center"
             android:text="Course Name"
-            android:textSize="35sp"
-            android:textStyle="bold" />
+            android:textSize="25sp"
+            android:textStyle="bold"
+             />
+			
+			
 
         <Button
             android:id="@+id/editbutton"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="90"
-            android:background="@drawable/edit_button"
-            android:minHeight="10dip"
-            android:minWidth="20dip" />
+            android:layout_height="wrap_content"
+            android:layout_weight="83"
+            android:text="Edit"
+             />
     </LinearLayout>
 
     <ScrollView
@@ -39,164 +43,121 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical" >
-
+       
+            
             <TextView
-                android:id="@+id/add_instructor_name"
-                android:layout_width="wrap_content"
+                
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Instructor Name:"
+                android:textSize="20dp" 
+                android:textStyle="bold"
+                />
+           <TextView
+                android:id="@+id/instructor_name"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Instructor Name"
-                android:textSize="20dp" />
-
+                android:textSize="15dp"/>
+                
+       
             <TextView
-                android:id="@+id/add_weblink"
-                android:layout_width="wrap_content"
+                
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Course Weblink"
-                android:textSize="20dp" />
+                android:text="Email:"
+                android:textSize="20dp" 
+                android:textStyle="bold"
+                />
+           <TextView
+                android:id="@+id/email_id"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Email"
+                android:textSize="15dp"
+                android:textColor="#006BB2"/>
+                
+      
             
+            <TextView
+                
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Course Weblink:"
+                android:textSize="20dp" 
+                android:textStyle="bold"
+                />
+           <TextView
+                android:id="@+id/courseLink"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Coures Weblink"
+                android:textSize="15dp"
+                android:textColor="#006BB2"/>
+                
+      
+            
+            <TextView
+                
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Course Credits:"
+                android:textSize="20dp" 
+                android:textStyle="bold"
+                />
+           <TextView
+                android:id="@+id/courseCredits"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Course Credits"
+                android:textSize="15dp"/>
+                
+      
+            
+            <TextView
+                
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Schedule:"
+                android:textSize="20dp" 
+                android:textStyle="bold"
+                />
+           <TextView
+                android:id="@+id/schedule"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Schedule"
+                android:textSize="15dp"/>
+       
              <TextView
-                android:id="@+id/add_office_hr_add"
-                android:layout_width="wrap_content"
+                
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Office hour and office no.:"
+                android:textSize="20dp" 
+                android:textStyle="bold"/>
+			<TextView
+                android:id="@+id/office_hr_add"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Office hour and office no."
-                android:textSize="20dp" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lecture Schedule :	"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/add_lecture_days"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Days	"
-                    android:textSize="15dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:orientation="horizontal"
-                android:padding="10dp" >
-
-                <TextView
-                    android:id="@+id/add_lecture_starttime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="StartTime"
-                    android:textSize="15dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tutorial Schedule :	"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/add_tutorial_days"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Days	"
-                    android:textSize="15dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:orientation="horizontal"
-                android:padding="10dp" >
-
-                <TextView
-                    android:id="@+id/add_tutorial_starttime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="StartTime"
-                    android:textSize="15dp" />
-
-               
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lab Schedule :	"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/add_lab_days"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Days	"
-                    android:textSize="15dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:orientation="horizontal"
-                android:padding="10dp" >
-
-                <TextView
-                    android:id="@+id/add_lab_starttime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="StartTime"
-                    android:textSize="15dp" />
-
-                
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/add_lec_venue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Lecture Venue	"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/add_tut_venue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Tutorial Venue	"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/add_lab_venue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Lab Venue	"
-                android:textSize="20dp" />
+                android:textSize="15dp" 
+                />
+            
+           
+         
         </LinearLayout>
     </ScrollView>
 

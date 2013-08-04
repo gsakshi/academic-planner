@@ -4,6 +4,9 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
  
@@ -30,40 +33,70 @@ public class MainActivity extends TabActivity{
 		  .setIndicator("Time Table")
 		  .setContent(intent2);
  
-		// Calendar tab
-		Intent intent3 = new Intent().setClass(this, Calendar.class);
+		Intent intent3 = new Intent().setClass(this, Examscheduler.class);
 		TabSpec tabSpec3 = tabHost
-		  .newTabSpec("exscheduler")
-		  .setIndicator("Exam Scheduler")
+		  .newTabSpec("exam")
+		  .setIndicator("Exam Schedule")
 		  .setContent(intent3);
  
 		// Notification tab
-		Intent intent4 = new Intent().setClass(this, Notification.class);
+		Intent intent4 = new Intent().setClass(this, Notes.class);
 		TabSpec tabSpec4 = tabHost
 		  .newTabSpec("notes")
 		  .setIndicator("My Notes")
 		  .setContent(intent4);
+		
+		
  
 		// add all tabs 
 		tabHost.addTab(tabSpec1);
 		tabHost.addTab(tabSpec2);
 		tabHost.addTab(tabSpec3);
 		tabHost.addTab(tabSpec4);
- 
+		
 		//set Windows tab as default (zero based)
-		tabHost.setCurrentTab(0);
-	}
-	
-	@Override
-	protected void onRestart() {
-		// TODO Auto-generated method stub
-		super.onRestart();
-		if (globe.done == 1)
+
+		if (Global1.tabN == 1)
 		{
-			finish();
+			
+			tabHost.setCurrentTab(3);
+		}
+		else{
+		tabHost.setCurrentTab(0);
 		}
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		 MenuInflater inflater = getMenuInflater();
+         inflater.inflate(R.menu.menu, menu);
+         return true;
+	}
+    
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		// Handle item selection
+        
+        
+        switch (item.getItemId()) {
+        case R.id.exit:
+        	finish();
+        	return true;
+        case R.id.aboutApp:
+        	Intent i = new Intent("com.acadplnr.aboutApp");
+        	startActivity(i);
+        	return true;
+        
+        default:
+            return super.onOptionsItemSelected(item); 	
+        }
+		
+	}
+
 	
  
 }
