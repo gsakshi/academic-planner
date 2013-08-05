@@ -15,7 +15,7 @@ public class Update extends Activity implements OnClickListener {
 
 	Button bdone, blab;
 	String ClickedPosition, lecv, tutv, labd, labv, hdata, welink, profid,
-			credits, profname1="",profname2="", profnames[]={},office, insname, prof="";
+			credits, profname1="",profname2="", profnames[]={},office, insname, prof="",profn="";
 	Global1 globe;
 	EditText courseLnk, instructname, off_hr_add, courseCredits, lectVenue,
 			tutVenue, profemail;
@@ -58,12 +58,12 @@ public class Update extends Activity implements OnClickListener {
 			profnames = prof.split(",");
 	    	for (int i = 0; i < profnames.length; i++) {
 	    			if (i == 0)
-	    				profname1 = profnames[i];
+	    				profn = profnames[i];
 
 	    			else if (i == 1)
-	    				profname2 = profnames[i];
+	    				profn = profn + profnames[i];
 	    	}
-			instructname.setText(profname1 +"\n" + profname2);
+			instructname.setText(profn);
 			profemail.setText(data[2]);
 			courseLnk.setText(data[3]);
 			off_hr_add.setText(data[4]);

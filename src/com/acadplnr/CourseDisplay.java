@@ -17,7 +17,7 @@ public class CourseDisplay extends Activity implements OnClickListener {
 			courseSchedule, off_hr_add;
 	public String ClickedPosition, CourseLink, SUDOschedule = "";
 	String html, coursetitle = "", prof = "", schedule = "", profname[] = {},
-			profname1 = "", profname2 = "", profemail = "", lecv = "",
+			profname1 = "", profname2 = "",profn="", profemail = "", lecv = "",
 			tutv = "", labv = "", lecdays = "", tutdays = "", labdays = "",
 			weblink = "", lecmonst = "", lecmonet = "", lectuest = "",
 			lectueet = "", offhradd = "", lecwedst = "", lecwedet = "",
@@ -83,12 +83,12 @@ public class CourseDisplay extends Activity implements OnClickListener {
 			profname = prof.split(", ");
 			for (int i = 0; i < profname.length; i++) {
 				if (i == 0)
-					profname1 = profname[i];
+					profn = profname[i];
 
 				else if (i == 1)
-					profname2 = profname[i];
+					profn = profn  + profname[i];
 			}
-			instructorNm.setText(profname1 + "\n" + profname2);
+			instructorNm.setText(profn);
 			courseEmailId.setText(data[2]);
 			off_hr_add.setText(data[4]);
 			courseCredits.setText(data[10]);

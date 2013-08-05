@@ -8,31 +8,34 @@ import android.widget.TextView;
 
 public class TimeTable extends Activity {
 
-	
 	TextView tvMonC, tvMonT, tvTusC, tvTusT, tvWedC, tvWedT, tvThurC, tvThurT,
 			tvFriC, tvFriT, tvSatC, tvSatT, tvSunC, tvSunT;
-	
+
 	String html, coursetitle = "", prof = "", schedule = "", profname[] = {},
 			profname1 = "", profname2 = "", profemail = "", lecv = "",
-			tutv = "", labv = "", lecdays = "", tutdays = "", labdays = "",weblink="",
-			lecmonst = "", lecmonet = "", lectuest = "", lectueet = "",offhradd="",
-			lecwedst = "", lecwedet = "", lecthust = "", lecthuet = "",
-			lecfrist = "", lecfriet = "", lecsatst = "", lecsatet = "",
-			lecsunst = "", lecsunet = "", tutmonst = "", tutmonet = "",
-			tuttuest = "", tuttueet = "", tutwedst = "", tutwedet = "",
-			tutthust = "", tutthuet = "", tutfrist = "", tutfriet = "",
-			tutsatst = "", tutsatet = "", tutsunst = "", tutsunet = "",
-			labmonst = "", labmonet = "", labtuest = "", labtueet = "",
-			labwedst = "", labwedet = "", labthust = "", labthuet = "",
-			labfrist = "", labfriet = "", labsatst = "", labsatet = "",
-			labsunst = "", labsunet = "", smont = "",
-					stuet = "", swedt = "", sthut = "", sfrit = "", ssatt = "",
-					ssunt = "", smonc = "", stuec = "", swedc = "", sthuc = "",
-					sfric = "", ssatc = "", ssunc = "",credits="",SUDOschedule="",LABdays;
-	int a=0,b=0,c=0,d=0,e=0,f=0,g=0;
+			tutv = "", labv = "", lecdays = "", tutdays = "", labdays = "",
+			weblink = "", lecmonst = "", lecmonet = "", lectuest = "",
+			lectueet = "", offhradd = "", lecwedst = "", lecwedet = "",
+			lecthust = "", lecthuet = "", lecfrist = "", lecfriet = "",
+			lecsatst = "", lecsatet = "", lecsunst = "", lecsunet = "",
+			tutmonst = "", tutmonet = "", tuttuest = "", tuttueet = "",
+			tutwedst = "", tutwedet = "", tutthust = "", tutthuet = "",
+			tutfrist = "", tutfriet = "", tutsatst = "", tutsatet = "",
+			tutsunst = "", tutsunet = "", labmonst = "", labmonet = "",
+			labtuest = "", labtueet = "", labwedst = "", labwedet = "",
+			labthust = "", labthuet = "", labfrist = "", labfriet = "",
+			labsatst = "", labsatet = "", labsunst = "", labsunet = "",
+			smont = "", stuet = "", swedt = "", sthut = "", sfrit = "",
+			smonc = "", stuec = "", swedc = "",
+			sthuc = "", sfric = "", mont[] = {},
+			tuet[] = {}, wedt[] = {}, thut[] = {}, frit[] = {}, monc[] = {},
+			tuec[] = {}, wedc[] = {}, thuc[] = {}, fric[] = {}, credits = "",
+			SUDOschedule = "", LABdays;
+	int a = 0, b = 0, c = 0, d = 0, e = 0, f = 0, g = 0;
 	int j;
 
 	private String courseName;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -43,110 +46,117 @@ public class TimeTable extends Activity {
 		tvWedC = (TextView) findViewById(R.id.tvWedC);
 		tvThurC = (TextView) findViewById(R.id.tvThurC);
 		tvFriC = (TextView) findViewById(R.id.tvFriC);
-		
-		
+
 		tvMonT = (TextView) findViewById(R.id.tvMonT);
 		tvTusT = (TextView) findViewById(R.id.tvTusT);
 		tvWedT = (TextView) findViewById(R.id.tvWedT);
 		tvThurT = (TextView) findViewById(R.id.tvThurT);
 		tvFriT = (TextView) findViewById(R.id.tvFriT);
-		
+
 		Crs_database_help info = new Crs_database_help(this);
 		info.open();
-	
-			int count = info.getCount();
-			for (int j = 0; j < count; j++) {
-				String detail = info.GetCourseDetailById(j + 1);
-				String data[] = detail.split("---");
-				courseName = data[0].split(" ")[0];
-				schedule = data[9];
-				LABdays = data[5];
-				try{
+
+		int count = info.getCount();
+		for (int j = 0; j < count; j++) {
+			String detail = info.GetCourseDetailById(j + 1);
+			String data[] = detail.split("---");
+			courseName = data[0].split(" ")[0];
+			schedule = data[9];
+			LABdays = data[5];
+			try {
 				breakschedule();
-				}catch(Exception e)
-				{
-					String error = e.toString();
-					Dialog h = new Dialog(this);
-					h.setTitle(" :( break sch");
-					TextView tv1 = new TextView(this);
-					tv1.setText(error);
-					h.setContentView(tv1);
-					h.show();
-				}
-				try{
-					get_timetable();
-					}catch(Exception e)
-					{
-						String error = e.toString();
-						Dialog h = new Dialog(this);
-						h.setTitle(" :( break sch");
-						TextView tv1 = new TextView(this);
-						tv1.setText(error);
-						h.setContentView(tv1);
-						h.show();
-					}
-				
-				
+			} catch (Exception e) {
+				String error = e.toString();
+				Dialog h = new Dialog(this);
+				h.setTitle(" :( break sch");
+				TextView tv1 = new TextView(this);
+				tv1.setText(error);
+				h.setContentView(tv1);
+				h.show();
 			}
-			
-		
-		 tvMonC.setText(smonc); tvMonT.setText(smont);
-		 tvTusC.setText(stuec); tvTusT.setText(stuet);
-		 tvWedC.setText(swedc); tvWedT.setText(swedt);
-		 tvThurC.setText(sthuc); tvThurT.setText(sthut);
-		 tvFriC.setText(sfric); tvFriT.setText(sfrit);
-		 
-		
-		 info.close();
+			try {
+				get_timetable();
+			} catch (Exception e) {
+				String error = e.toString();
+				Dialog h = new Dialog(this);
+				h.setTitle(" :( break sch");
+				TextView tv1 = new TextView(this);
+				tv1.setText(error);
+				h.setContentView(tv1);
+				h.show();
+			}
+
+		}
+		sorttimetable();
+		tvMonC.setText(smonc);
+		tvMonT.setText(smont);
+		tvTusC.setText(stuec);
+		tvTusT.setText(stuet);
+		tvWedC.setText(swedc);
+		tvWedT.setText(swedt);
+		tvThurC.setText(sthuc);
+		tvThurT.setText(sthut);
+		tvFriC.setText(sfric);
+		tvFriT.setText(sfrit);
+
+		info.close();
 	}
+
 	public void breakschedule() {
 
 		int lecindex, tutindex, labindex;
 		lecindex = schedule.indexOf("LEC");
 		tutindex = schedule.indexOf("TUT");
 		labindex = schedule.indexOf("LAB");
-		
-		j=0;
+
+		j = 0;
 		if (lecindex != -1) {
 
 			String lecd = "", lect = "", lecvenue = "";
 			j = lecindex + 5;
 			skip_white_spaces(schedule);
-			while (((tutindex!=-1 && j < tutindex) || tutindex==-1) && ((labindex!=-1 && j < labindex) || labindex==-1) && j<schedule.length() && schedule.charAt(j)!='n') {
-				
-				lecd = ""; lect = ""; lecvenue = "";
-				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
+			while (((tutindex != -1 && j < tutindex) || tutindex == -1)
+					&& ((labindex != -1 && j < labindex) || labindex == -1)
+					&& j < schedule.length() && schedule.charAt(j) != 'n') {
+
+				lecd = "";
+				lect = "";
+				lecvenue = "";
+				while (schedule.charAt(j) != ' ' && j < schedule.length()) {
 					lecd = lecd + schedule.charAt(j);
 					j++;
 				}
 				j++;
-				
-				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
-						lect = lect + schedule.charAt(j);
-						j++;
+
+				while (schedule.charAt(j) != ' ' && j < schedule.length()) {
+					lect = lect + schedule.charAt(j);
+					j++;
 				}
-				
+
 				j++;
-				
-				while (schedule.charAt(j)!=';' && j<schedule.length() ) {
+
+				while (schedule.charAt(j) != ';' && j < schedule.length()) {
 					lecvenue = lecvenue + schedule.charAt(j);
 					j++;
 				}
 				j++;
-				if(j<schedule.length())
-				skip_white_spaces(schedule);
+				if (j < schedule.length())
+					skip_white_spaces(schedule);
 				if (lecvenue.contentEquals("REQ")) {
 					if (lecv.contentEquals(""))
 						lecv = "N.A.";
 				} else
 					lecv = lecvenue;
-				
+
 				if (lecd.contains("M")) {
 					lecdays = lecdays + "M ";
 					lecmonst = lect.split("-")[0];
 					lecmonet = lect.split("-")[1];
 				}
-				if (lecd.contains("T") && (((lecd.indexOf("T") + 1)<lecd.length() && lecd.charAt(lecd.indexOf("T") + 1) != 'h') || (lecd.indexOf("T") + 1)==lecd.length())){
+				if (lecd.contains("T")
+						&& (((lecd.indexOf("T") + 1) < lecd.length() && lecd
+								.charAt(lecd.indexOf("T") + 1) != 'h') || (lecd
+								.indexOf("T") + 1) == lecd.length())) {
 					lecdays = lecdays + "T ";
 					lectuest = lect.split("-")[0];
 					lectueet = lect.split("-")[1];
@@ -160,55 +170,61 @@ public class TimeTable extends Activity {
 					lecdays = lecdays + "Th ";
 					lecthust = lect.split("-")[0];
 					lecthuet = lect.split("-")[1];
-				}if (lecd.contains("F")) {
+				}
+				if (lecd.contains("F")) {
 					lecdays = lecdays + "F ";
 					lecfrist = lect.split("-")[0];
 					lecfriet = lect.split("-")[1];
 				}
-				
-				
+
 			}
 		}
-		j=0;
+		j = 0;
 		if (tutindex != -1) {
 
 			String tutd = "", tutt = "", tutvenue = "";
 			j = tutindex + 5;
 			skip_white_spaces(schedule);
-			while (((labindex!=-1 && j < labindex) || labindex==-1) && j<schedule.length() && schedule.charAt(j)!='n' ) {
-				tutd = ""; tutt = ""; tutvenue = "";
-				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
+			while (((labindex != -1 && j < labindex) || labindex == -1)
+					&& j < schedule.length() && schedule.charAt(j) != 'n') {
+				tutd = "";
+				tutt = "";
+				tutvenue = "";
+				while (schedule.charAt(j) != ' ' && j < schedule.length()) {
 					tutd = tutd + schedule.charAt(j);
 					j++;
 				}
 				j++;
-				
-				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
-						tutt = tutt + schedule.charAt(j);
-						j++;
+
+				while (schedule.charAt(j) != ' ' && j < schedule.length()) {
+					tutt = tutt + schedule.charAt(j);
+					j++;
 				}
 				j++;
-				
-				while (schedule.charAt(j) != ';' && j<schedule.length() ) {
+
+				while (schedule.charAt(j) != ';' && j < schedule.length()) {
 					tutvenue = tutvenue + schedule.charAt(j);
 					j++;
 				}
 				j++;
-				
-				if(j<schedule.length())
-				skip_white_spaces(schedule);
+
+				if (j < schedule.length())
+					skip_white_spaces(schedule);
 				if (tutvenue.contentEquals("REQ")) {
 					if (tutv.contentEquals(""))
 						tutv = "N.A.";
 				} else
 					tutv = tutvenue;
-				
+
 				if (tutd.contains("M")) {
 					tutdays = tutdays + "M ";
 					tutmonst = tutt.split("-")[0];
 					tutmonet = tutt.split("-")[1];
 				}
-				if(tutd.contains("T") && (((tutd.indexOf("T") + 1)<tutd.length() && tutd.charAt(tutd.indexOf("T") + 1) != 'h') || (tutd.indexOf("T") + 1)==tutd.length())) {
+				if (tutd.contains("T")
+						&& (((tutd.indexOf("T") + 1) < tutd.length() && tutd
+								.charAt(tutd.indexOf("T") + 1) != 'h') || (tutd
+								.indexOf("T") + 1) == tutd.length())) {
 					tutdays = tutdays + "T ";
 					tuttuest = tutt.split("-")[0];
 					tuttueet = tutt.split("-")[1];
@@ -228,49 +244,54 @@ public class TimeTable extends Activity {
 					tutfrist = tutt.split("-")[0];
 					tutfriet = tutt.split("-")[1];
 				}
-				
+
 			}
 		}
-		j=0;
+		j = 0;
 		if (labindex != -1) {
 
 			String labd = "", labt = "", labvenue = "";
 			j = labindex + 5;
 			skip_white_spaces(schedule);
-			while (j<schedule.length() && schedule.charAt(j)!='n') {
-				labd = ""; labt = ""; labvenue = "";
-				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
+			while (j < schedule.length() && schedule.charAt(j) != 'n') {
+				labd = "";
+				labt = "";
+				labvenue = "";
+				while (schedule.charAt(j) != ' ' && j < schedule.length()) {
 					labd = labd + schedule.charAt(j);
 					j++;
 				}
 				j++;
-				
-				while (schedule.charAt(j) != ' ' && j<schedule.length() ) {
-						labt = labt + schedule.charAt(j);
-						j++;
+
+				while (schedule.charAt(j) != ' ' && j < schedule.length()) {
+					labt = labt + schedule.charAt(j);
+					j++;
 				}
-				
+
 				j++;
-				while (schedule.charAt(j) != ';' && j<schedule.length() ) {
+				while (schedule.charAt(j) != ';' && j < schedule.length()) {
 					labvenue = labvenue + schedule.charAt(j);
 					j++;
 				}
 				j++;
-				
-				if(j<schedule.length())
-				skip_white_spaces(schedule);
+
+				if (j < schedule.length())
+					skip_white_spaces(schedule);
 				if (labvenue.contentEquals("REQ")) {
 					if (labv.contentEquals(""))
 						labv = "N.A.";
 				} else
 					labv = labvenue;
-				
+
 				if (labd.contains("M")) {
 					labdays = labdays + "M ";
 					labmonst = labt.split("-")[0];
 					labmonet = labt.split("-")[1];
 				}
-				if (labd.contains("T") && (((labd.indexOf("T") + 1)<labd.length() && labd.charAt(labd.indexOf("T") + 1) != 'h') || (labd.indexOf("T") + 1)==labd.length())) {
+				if (labd.contains("T")
+						&& (((labd.indexOf("T") + 1) < labd.length() && labd
+								.charAt(labd.indexOf("T") + 1) != 'h') || (labd
+								.indexOf("T") + 1) == labd.length())) {
 					labdays = labdays + "T ";
 					labtuest = labt.split("-")[0];
 					labtueet = labt.split("-")[1];
@@ -290,107 +311,198 @@ public class TimeTable extends Activity {
 					labfrist = labt.split("-")[0];
 					labfriet = labt.split("-")[1];
 				}
-				
+
 			}
 		}
 	}
-	
-	public void skip_white_spaces(String schedule){
-		
-		while(schedule.charAt(j)==' ' && j<(schedule.length())){
+
+	public void skip_white_spaces(String schedule) {
+
+		while (schedule.charAt(j) == ' ' && j < (schedule.length())) {
 			j++;
 		}
 	}
+
 	private void get_timetable() {
 		// TODO Auto-generated method stub
-		if(lecmonst != "")
-		{
-			smonc = smonc+ courseName+"(LEC)"+ "\n";
-			smont = smont +lecmonst +" to "+ lecmonet + "\n";
+		if (lecmonst != "") {
+			smonc = smonc + courseName + "(LEC)" + "\n";
+			smont = smont + lecmonst + " to " + lecmonet + "\n";
 		}
-		if(lectuest != "")
-		{
-			stuec = stuec+ courseName+"(LEC)"+ "\n";
-			stuet = stuet +lectuest +" to "+ lectueet + "\n";
+		if (lectuest != "") {
+			stuec = stuec + courseName + "(LEC)" + "\n";
+			stuet = stuet + lectuest + " to " + lectueet + "\n";
 		}
-		if(lecwedst != "")
-		{
-			swedc = swedc+ courseName+"(LEC)"+ "\n";
-			swedt = swedt +lecwedst +" to "+ lecwedet + "\n";
+		if (lecwedst != "") {
+			swedc = swedc + courseName + "(LEC)" + "\n";
+			swedt = swedt + lecwedst + " to " + lecwedet + "\n";
 		}
-		if(lecthust != "")
-		{
-			sthuc = sthuc+ courseName+"(LEC)"+ "\n";
-			sthut = sthut +lecthust +" to "+ lecthuet + "\n";
+		if (lecthust != "") {
+			sthuc = sthuc + courseName + "(LEC)" + "\n";
+			sthut = sthut + lecthust + " to " + lecthuet + "\n";
 		}
-		if(lecfrist != "")
-		{
-			sfric = sfric+ courseName+"(LEC)"+ "\n";
-			sfrit = sfrit +lecfrist +" to "+ lecfriet + "\n";
+		if (lecfrist != "") {
+			sfric = sfric + courseName + "(LEC)" + "\n";
+			sfrit = sfrit + lecfrist + " to " + lecfriet + "\n";
 		}
-		
-		
-		if(tutmonst != "")
-		{
-			smonc = smonc+ courseName+"(TUT)"+ "\n";
-			smont = smont +tutmonst +" to "+ tutmonet + "\n";
+
+		if (tutmonst != "") {
+			smonc = smonc + courseName + "(TUT)" + "\n";
+			smont = smont + tutmonst + " to " + tutmonet + "\n";
 		}
-		if(tuttuest != "")
-		{
-			stuec = stuec+ courseName+"(TUT)"+ "\n";
-			stuet = stuet +tuttuest +" to "+ tuttueet + "\n";
+		if (tuttuest != "") {
+			stuec = stuec + courseName + "(TUT)" + "\n";
+			stuet = stuet + tuttuest + " to " + tuttueet + "\n";
 		}
-		if(tutwedst != "")
-		{
-			swedc = swedc+ courseName+"(TUT)"+ "\n";
-			swedt = swedt +tutwedst +" to "+ tutwedet + "\n";
+		if (tutwedst != "") {
+			swedc = swedc + courseName + "(TUT)" + "\n";
+			swedt = swedt + tutwedst + " to " + tutwedet + "\n";
 		}
-		if(tutthust != "")
-		{
-			sthuc = sthuc+ courseName+"(TUT)"+ "\n";
-			sthut = sthut +tutthust +" to "+ tutthuet + "\n";
+		if (tutthust != "") {
+			sthuc = sthuc + courseName + "(TUT)" + "\n";
+			sthut = sthut + tutthust + " to " + tutthuet + "\n";
 		}
-		if(tutfrist != "")
-		{
-			sfric = sfric+ courseName+"(TUT)"+ "\n";
-			sfrit = sfrit +tutfrist +" to "+ tutfriet + "\n";
+		if (tutfrist != "") {
+			sfric = sfric + courseName + "(TUT)" + "\n";
+			sfrit = sfrit + tutfrist + " to " + tutfriet + "\n";
 		}
-		
-		
-		if(LABdays.contains("M"))
-		{
-			smonc = smonc+ courseName+"(LAB)"+ "\n";
-			smont = smont +labmonst +" to "+ labmonet + "\n";
+
+		if (LABdays.contains("M")) {
+			smonc = smonc + courseName + "(LAB)" + "\n";
+			smont = smont + labmonst + " to " + labmonet + "\n";
 		}
-		if(LABdays.contains("T "))
-		{
-			stuec = stuec+ courseName+"(LAB)"+ "\n";
-			stuet = stuet +labtuest +" to "+ labtueet + "\n";
+		if (LABdays.contains("T ")) {
+			stuec = stuec + courseName + "(LAB)" + "\n";
+			stuet = stuet + labtuest + " to " + labtueet + "\n";
 		}
-		if(LABdays.contains("W"))
-		{
-			swedc = swedc+ courseName+"(LAB)"+ "\n";
-			swedt = swedt +labwedst +" to "+ labwedet + "\n";
+		if (LABdays.contains("W")) {
+			swedc = swedc + courseName + "(LAB)" + "\n";
+			swedt = swedt + labwedst + " to " + labwedet + "\n";
 		}
-		if(LABdays.contains("Th"))
-		{
-			sthuc = sthuc+ courseName+"(LAB)"+ "\n";
-			sthut = sthut +labthust +" to "+ labthuet + "\n";
+		if (LABdays.contains("Th")) {
+			sthuc = sthuc + courseName + "(LAB)" + "\n";
+			sthut = sthut + labthust + " to " + labthuet + "\n";
 		}
-		if(LABdays.contains("F"))
-		{
-			sfric = sfric+ courseName+"(LAB)"+ "\n";
-			sfrit = sfrit +labfrist +" to "+ labfriet + "\n";
+		if (LABdays.contains("F")) {
+			sfric = sfric + courseName + "(LAB)" + "\n";
+			sfrit = sfrit + labfrist + " to " + labfriet + "\n";
 		}
-		lecmonst = ""; lecmonet = ""; lectuest = ""; lectueet = "";offhradd="";
-				lecwedst = ""; lecwedet = ""; lecthust = ""; lecthuet = "";
-				lecfrist = ""; lecfriet = ""; lecsatst = ""; lecsatet = "";
-				lecsunst = ""; lecsunet = ""; tutmonst = ""; tutmonet = "";
-				tuttuest = ""; tuttueet = ""; tutwedst = ""; tutwedet = "";
-				tutthust = ""; tutthuet = ""; tutfrist = ""; tutfriet = "";
-				tutsatst = ""; tutsatet = ""; tutsunst = ""; tutsunet = "";
-				labmonst = ""; labmonet = ""; labtuest = ""; labtueet = "";
-				labwedst = ""; labwedet = ""; labthust = ""; labthuet = "";
-				labfrist = ""; labfriet = "";
+		lecmonst = "";
+		lecmonet = "";
+		lectuest = "";
+		lectueet = "";
+		offhradd = "";
+		lecwedst = "";
+		lecwedet = "";
+		lecthust = "";
+		lecthuet = "";
+		lecfrist = "";
+		lecfriet = "";
+		lecsatst = "";
+		lecsatet = "";
+		lecsunst = "";
+		lecsunet = "";
+		tutmonst = "";
+		tutmonet = "";
+		tuttuest = "";
+		tuttueet = "";
+		tutwedst = "";
+		tutwedet = "";
+		tutthust = "";
+		tutthuet = "";
+		tutfrist = "";
+		tutfriet = "";
+		tutsatst = "";
+		tutsatet = "";
+		tutsunst = "";
+		tutsunet = "";
+		labmonst = "";
+		labmonet = "";
+		labtuest = "";
+		labtueet = "";
+		labwedst = "";
+		labwedet = "";
+		labthust = "";
+		labthuet = "";
+		labfrist = "";
+		labfriet = "";
 	}
-}	
+
+
+	public void sorttimetable(){
+		mont=smont.split("\n");
+		monc=smonc.split("\n");
+		tuet=stuet.split("\n");
+		tuec=stuec.split("\n");
+		wedt=swedt.split("\n");
+		wedc=swedc.split("\n");
+		thut=sthut.split("\n");
+		thuc=sthuc.split("\n");
+		frit=sfrit.split("\n");
+		fric=sfric.split("\n");
+		smont="";smonc="";
+		stuet="";stuec="";
+		swedt="";swedc="";
+		sthut="";sthuc="";
+		sfrit="";sfric="";
+		
+		int i;
+		sortascend(mont,monc);
+		for(i=0;i<mont.length;i++){
+			smont = smont + mont[i] + "\n";
+			smonc = smonc + monc[i] + "\n";
+		}
+		sortascend(tuet,tuec);
+		for(i=0;i<tuet.length;i++){
+			stuet = stuet + tuet[i] + "\n";
+			stuec = stuec + tuec[i] + "\n";
+		}
+		sortascend(wedt,wedc);
+		for(i=0;i<wedt.length;i++){
+			swedt = swedt + wedt[i] + "\n";
+			swedc = swedc + wedc[i] + "\n";
+		}
+		sortascend(thut,thuc);
+		for(i=0;i<thut.length;i++){
+			sthut = sthut + thut[i] + "\n";
+			sthuc = sthuc + thuc[i] + "\n";
+		}
+		sortascend(frit,fric);
+		for(i=0;i<frit.length;i++){
+			sfrit = sfrit + frit[i] + "\n";
+			sfric = sfric + fric[i] + "\n";
+		}
+		
+	}
+	
+	public void sortascend(String time[], String course[]){
+		
+		int i;
+		for(i=1;i<time.length;i++){
+			int j;
+			Long tempbegtime = retbegtime(time[i]);
+			String tempcourse = course[i];
+			String temptime = time[i];
+			j=i-1;
+			while(j>=0 && retbegtime(time[j])>tempbegtime){
+				time[j+1]=time[j];
+				course[j+1]=course[j];
+				j--;
+			}
+			time[j+1]=temptime;
+			course[j+1]=tempcourse;
+		}
+	}
+
+	public Long retbegtime(String t){
+		String btime,hr,min;
+		btime = t.split(" ")[0];
+		hr = btime.split(":")[0];
+		min=btime.split(":")[1];
+		Long hour = Long.parseLong(hr);
+		Long minute = Long.parseLong(min);
+		Long second = hour*3600 + minute*60;
+		return(second);
+	}
+	
+}
